@@ -172,5 +172,5 @@ function showQueue(message, serverQueue) {
 
     message.reply(`🎵 **Current Queue:**\n${queueMessage}`);
 }
-
+module.exports = client;
 client.login(token);
