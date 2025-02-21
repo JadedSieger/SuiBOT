@@ -80,7 +80,6 @@ async function execute(message, serverQueue) {
     if (!selectedVideo) return message.reply("Couldn't find a suitable music video.");
 
     const song = { title: selectedVideo.title, url: selectedVideo.url };
-    message.reply(`🎶 Now playing: **${song.title}**`);
 
     if (!serverQueue) {
         const queueConstruct = {
@@ -91,6 +90,7 @@ async function execute(message, serverQueue) {
         };
         queue.set(message.guild.id, queueConstruct);
         queueConstruct.songs.push(song);
+        message.reply(`🎶 Now playing: **${song.title}**`);
         
         try {
             const connection = joinVoiceChannel({
@@ -113,8 +113,10 @@ async function execute(message, serverQueue) {
 
 function playSong(guild, song) {
     const serverQueue = queue.get(guild.id);
-    if (!song) {
-        serverQueue.connection.destroy();
+    if (!serverQueue || !song) {
+        if (serverQueue?.connection) {
+            serverQueue.connection.destroy();
+        }
         queue.delete(guild.id);
         return;
     }
@@ -153,7 +155,9 @@ async function fetchYouTubeResults(query) {
         video.snippet.title.toLowerCase().includes("official") ||
         video.snippet.title.toLowerCase().includes("mv") ||
         video.snippet.title.toLowerCase().includes("music video") ||
-        video.snippet.title.toLowerCase().includes("cover")
+        video.snippet.title.toLowerCase().includes("cover") ||
+        video.snippet.title.toLowerCase().includes("original") ||
+        video.snippet.title.toLowerCase().includes("original song")
     ).map(video => ({ title: video.snippet.title, url: `https://www.youtube.com/watch?v=${video.id.videoId}` }));
 }
 
