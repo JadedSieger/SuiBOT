@@ -8,5 +8,12 @@
     "googleapis": "^144.0.0",
     "stream": "^0.0.3",
     "ytsr": "^3.8.4"
+    "@railway/cli": "^3.21.0",
+    "cors": "^2.8.5",
+  },
+  "scripts":{
+    "start" : "node server.js",
+    "install-deps": "npm install",
+    "dev": "nodemon server.js"
   }
 }
