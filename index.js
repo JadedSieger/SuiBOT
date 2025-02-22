@@ -141,8 +141,7 @@ function getStream(url) {
     return spawn("yt-dlp", ["-f", "bestaudio", "--no-playlist", "-o", "-", url], { stdio: ["ignore", "pipe", "ignore"] }).stdout;
 }
 
-async function fetchYouTubeResults(query, songTitle, artist) {
-    console.log(songTitle + "-" + artist);
+async function fetchYouTubeResults(query) {
     const youtube = google.youtube({ version: "v3", auth: youtubeApiKey });
     const response = await youtube.search.list({
         part: "snippet",
