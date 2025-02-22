@@ -10,6 +10,7 @@ const {
 } = require("@discordjs/voice");
 const { spawn } = require("child_process");
 const { google } = require("googleapis");
+const fs = require("fs");
 
 const token = process.env.token;
 const prefix = process.env.prefix1 || process.env.prefix2 || "!";
@@ -136,9 +137,25 @@ function stop(message, serverQueue) {
     queue.delete(message.guild.id);
     message.reply("Stopped playback and left the voice channel.");
 }
-const ytDlpPath = "./bin/yt-dlp.exe";
+const ytDlpExePath = "./bin/yt-dlp.exe";
+const ytDlpPythonPath = "/usr/local/bin/yt-dlp";
+const ytDlpCmd = "yt-dlp";
+
+
 function getStream(url) {
-    return spawn(yt-dlp , ["-f", "bestaudio", "--no-playlist", "-o", "-", url], { stdio: ["ignore", "pipe", "ignore"] }).stdout;
+    let ytDlpPath;
+
+    if(fs.existsSync(ytDlpExePath)){
+        ytDlpPath = process.platform === "win32" ? ytDlpExePath : "wine";  // Use Wine for Linux
+    } else if (fs.existsSync(ytDlpPythonPath)) {
+        ytDlpPath = ytDlpPythonPath;
+    } else{
+        ytDlpPath = ytDlpCmd;
+    }
+    const args = ["-f", "bestaudio", "--no-playlist", "-o", "-", url];
+    return process.platform === "win32" 
+    ? spawn(ytDlpPath ,args, { stdio: ["ignore", "pipe", "ignore"] }).stdout
+    : spawn(ytDlpPath, ytDlpPath === "wine" ? [ytDlpExePath, ...args] : args, { stdio: ["ignore", "pipe", "ignore"] }).stdout;
 }
 
 async function fetchYouTubeResults(query) {
