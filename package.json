@@ -15,7 +15,7 @@
     "ytsr": "^3.8.4"
   },
   "scripts": {
-    "start": "node server.js",
+    "start": "apt-get update && apt-get install -y ffmpeg && node server.js",
     "install-deps": "npm install",
     "dev": "nodemon server.js"
   }
