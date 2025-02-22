@@ -142,6 +142,7 @@ function getStream(url) {
 }
 
 async function fetchYouTubeResults(query, songTitle, artist) {
+    console.log(songTitle + "-" + artist);
     const youtube = google.youtube({ version: "v3", auth: youtubeApiKey });
     const response = await youtube.search.list({
         part: "snippet",
@@ -155,9 +156,7 @@ async function fetchYouTubeResults(query, songTitle, artist) {
         video.snippet.title.toLowerCase().includes("music video") ||
         video.snippet.title.toLowerCase().includes("cover") ||
         video.snippet.title.toLowerCase().includes("original") ||
-        video.snippet.title.toLowerCase().includes("original song")||
-        video.snippet.title.toLowerCase().includes(songTitle.toLowerCase() + " - " + artist.toLowerCase())|| 
-        video.snippet.title.toLowerCase().includes(artist.toLowerCase() + " - " + songTitle.toLowerCase())
+        video.snippet.title.toLowerCase().includes("original song")
     ).map(video => ({ title: video.snippet.title, url: `https://www.youtube.com/watch?v=${video.id.videoId}` }));
 }
 
