@@ -156,8 +156,8 @@ async function fetchYouTubeResults(query) {
         video.snippet.title.toLowerCase().includes("cover") ||
         video.snippet.title.toLowerCase().includes("original") ||
         video.snippet.title.toLowerCase().includes("original song")||
-        video.snippet.title.toLowerCase().includes(`${songTitle} - ${artist}`)|| 
-        video.snippet.title.toLowerCase().includes(`${artist} - ${songTitle}`)
+        video.snippet.title.toLowerCase().includes(songTitle.toLowerCase() + " - " + artist.toLowerCase())|| 
+        video.snippet.title.toLowerCase().includes(artist.toLowerCase() + " - " + songTitle.toLowerCase())
     ).map(video => ({ title: video.snippet.title, url: `https://www.youtube.com/watch?v=${video.id.videoId}` }));
 }
 
