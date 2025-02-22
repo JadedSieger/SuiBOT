@@ -137,25 +137,16 @@ function stop(message, serverQueue) {
     queue.delete(message.guild.id);
     message.reply("Stopped playback and left the voice channel.");
 }
+
 const ytDlpExePath = "./bin/yt-dlp.exe";
 const ytDlpPythonPath = "/usr/local/bin/yt-dlp";
 const ytDlpCmd = "yt-dlp";
 
-
 function getStream(url) {
-    let ytDlpPath;
-
-    if(fs.existsSync(ytDlpExePath)){
-        ytDlpPath = process.platform === "win32" ? ytDlpExePath : "wine";  // Use Wine for Linux
-    } else if (fs.existsSync(ytDlpPythonPath)) {
-        ytDlpPath = ytDlpPythonPath;
-    } else{
-        ytDlpPath = ytDlpCmd;
-    }
+    let ytDlpPath = fs.existsSync(ytDlpExePath) ? ytDlpExePath : (fs.existsSync(ytDlpPythonPath) ? ytDlpPythonPath : ytDlpCmd);
     const args = ["-f", "bestaudio", "--no-playlist", "-o", "-", url];
-    return process.platform === "win32" 
-    ? spawn(ytDlpPath ,args, { stdio: ["ignore", "pipe", "ignore"] }).stdout
     : spawn(ytDlpPath, ytDlpPath === "wine" ? [ytDlpExePath, ...args] : args, { stdio: ["ignore", "pipe", "ignore"] }).stdout;
+    return spawn(ytDlpPath, args, { stdio: ["ignore", "pipe", "ignore"] }).stdout;
 }
 
 async function fetchYouTubeResults(query) {
@@ -176,7 +167,6 @@ async function fetchYouTubeResults(query) {
     ).map(video => ({ title: video.snippet.title, url: `https://www.youtube.com/watch?v=${video.id.videoId}` }));
 }
 
-
 function showQueue(message, serverQueue) {
     if (!serverQueue || serverQueue.songs.length === 0) {
         return message.reply("The queue is currently empty.");
@@ -188,6 +178,7 @@ function showQueue(message, serverQueue) {
 
     message.reply(`🎵 **Current Queue:**\n${queueMessage}`);
 }
+
 
 module.exports = client;
 client.login(token);
