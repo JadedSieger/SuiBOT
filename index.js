@@ -74,7 +74,6 @@ async function execute(message, serverQueue) {
     const songTitle = match[1].trim();
     const artist = match[2].trim();
     
-    // Fetch and filter YouTube results
     const searchResults = await fetchYouTubeResults(`${songTitle} ${artist}`);
     const selectedVideo = searchResults.length > 0 ? searchResults[0] : null;
     if (!selectedVideo) return message.reply("Couldn't find a suitable music video.");
@@ -129,7 +128,6 @@ function playSong(guild, song) {
         playSong(guild, serverQueue.songs[0]);
     });
 }
-
 function stop(message, serverQueue) {
     if (!serverQueue) return message.reply("No song is currently playing.");
     serverQueue.songs = [];
@@ -157,9 +155,12 @@ async function fetchYouTubeResults(query) {
         video.snippet.title.toLowerCase().includes("music video") ||
         video.snippet.title.toLowerCase().includes("cover") ||
         video.snippet.title.toLowerCase().includes("original") ||
-        video.snippet.title.toLowerCase().includes("original song")
+        video.snippet.title.toLowerCase().includes("original song")||
+        video.snippet.title.toLowerCase().includes(`${songTitle} - ${artist}`)|| 
+        video.snippet.title.toLowerCase().includes(`${artist} - ${songTitle}`)
     ).map(video => ({ title: video.snippet.title, url: `https://www.youtube.com/watch?v=${video.id.videoId}` }));
 }
+
 
 function showQueue(message, serverQueue) {
     if (!serverQueue || serverQueue.songs.length === 0) {
@@ -172,5 +173,6 @@ function showQueue(message, serverQueue) {
 
     message.reply(`🎵 **Current Queue:**\n${queueMessage}`);
 }
+
 module.exports = client;
 client.login(token);
