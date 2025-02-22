@@ -16,6 +16,7 @@
   },
   "scripts": {
     "start": "apt-get update && apt-get install -y ffmpeg && node server.js",
+    "postinstall": "pip install yt-dlp",
     "install-deps": "npm install",
     "dev": "nodemon server.js"
   }
