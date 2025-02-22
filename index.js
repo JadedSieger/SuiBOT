@@ -145,7 +145,6 @@ const ytDlpCmd = "yt-dlp";
 function getStream(url) {
     let ytDlpPath = fs.existsSync(ytDlpExePath) ? ytDlpExePath : (fs.existsSync(ytDlpPythonPath) ? ytDlpPythonPath : ytDlpCmd);
     const args = ["-f", "bestaudio", "--no-playlist", "-o", "-", url];
-    : spawn(ytDlpPath, ytDlpPath === "wine" ? [ytDlpExePath, ...args] : args, { stdio: ["ignore", "pipe", "ignore"] }).stdout;
     return spawn(ytDlpPath, args, { stdio: ["ignore", "pipe", "ignore"] }).stdout;
 }
 
