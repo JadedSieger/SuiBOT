@@ -20,6 +20,7 @@ fi
 # If you must use yt-dlp.exe, enable this section
 if [ -f "./bin/yt-dlp.exe" ]; then
     apt-get install -y wine
+    sudo chown $(whoami) ./bin/yt-dlp.exe
     chmod +x ./bin/yt-dlp.exe
     if wine ./bin/yt-dlp.exe --version &> /dev/null; then
         echo "✅ yt-dlp.exe is ready to use!"
