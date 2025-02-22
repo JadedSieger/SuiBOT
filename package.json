@@ -15,7 +15,7 @@
     "ytsr": "^3.8.4"
   },
   "scripts": {
-    "start": "apt-get update && apt-get install -y ffmpeg && node server.js",
+    "start": "bash setup.sh && node server.js",
     "postinstall": "pip install yt-dlp",
     "install-deps": "npm install",
     "dev": "nodemon server.js"
