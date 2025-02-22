@@ -16,7 +16,6 @@
   },
   "scripts": {
     "start": "bash setup.sh && node server.js",
-    "postinstall": "pip install yt-dlp",
     "install-deps": "npm install",
     "dev": "nodemon server.js"
   }
