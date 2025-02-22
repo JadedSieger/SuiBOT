@@ -136,9 +136,9 @@ function stop(message, serverQueue) {
     queue.delete(message.guild.id);
     message.reply("Stopped playback and left the voice channel.");
 }
-
+const ytDlpPath = "./bin/yt-dlp";
 function getStream(url) {
-    return spawn("yt-dlp", ["-f", "bestaudio", "--no-playlist", "-o", "-", url], { stdio: ["ignore", "pipe", "ignore"] }).stdout;
+    return spawn(ytDlpPath, ["-f", "bestaudio", "--no-playlist", "-o", "-", url], { stdio: ["ignore", "pipe", "ignore"] }).stdout;
 }
 
 async function fetchYouTubeResults(query) {
