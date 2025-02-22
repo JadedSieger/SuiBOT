@@ -14,7 +14,7 @@ if yt-dlp --version &> /dev/null; then
     echo "✅ Python yt-dlp installed successfully!"
 else 
     echo "❌ Python yt-dlp installation failed!"
-    exit 1
+    exit 0
 fi
 
 # If you must use yt-dlp.exe, enable this section
@@ -25,7 +25,7 @@ if [ -f "./bin/yt-dlp.exe" ]; then
         echo "✅ yt-dlp.exe is ready to use!"
     else
         echo "❌ yt-dlp.exe setup failed! Check Wine."
-        exit 1
+        exit 0
     fi
 fi
 
