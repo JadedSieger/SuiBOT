@@ -9,6 +9,19 @@ const PORT = process.env.PORT || 3000;
 app.use(cors({ origin: "https://jadedsieger.github.io" }));
 app.use(express.json());
 
+
+exec("apt-get update && apt-get install -y ffmpeg", (error, stdout, stderr) => {
+    if (error) {
+        console.error(`Error installing FFmpeg: ${error.message}`);
+        return;
+    }
+    if (stderr) {
+        console.error(`FFmpeg stderr: ${stderr}`);
+    }
+    console.log(`FFmpeg installed successfully: ${stdout}`);
+});
+
+
 // Start Bot
 app.post('/bot/start', async (req, res) => {
     if (client.isReady()) {
@@ -53,3 +66,4 @@ app.get('/bot/name', (req, res) => {
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
 });
+
