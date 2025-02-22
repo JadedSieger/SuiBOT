@@ -138,7 +138,7 @@ function stop(message, serverQueue) {
 }
 const ytDlpPath = "./bin/yt-dlp.exe";
 function getStream(url) {
-    return spawn(ytDlpPath, ["-f", "bestaudio", "--no-playlist", "-o", "-", url], { stdio: ["ignore", "pipe", "ignore"] }).stdout;
+    return spawn(yt-dlp , ["-f", "bestaudio", "--no-playlist", "-o", "-", url], { stdio: ["ignore", "pipe", "ignore"] }).stdout;
 }
 
 async function fetchYouTubeResults(query) {
