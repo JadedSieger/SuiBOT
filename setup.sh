@@ -7,10 +7,10 @@ echo "Setting up yt-dlp from local files"
 apt-get update && apt-get install -y ffmpeg
 
 # Set executable permissions for yt-dlp
-chmod +x ./bin/yt-dlp
+chmod +x ./bin/yt-dlp.exe
 
 # Verify that yt-dlp is executable
-if ./bin/yt-dlp --version &> /dev/null; then
+if ./bin/yt-dlp.exe --version &> /dev/null; then
     echo "✅ yt-dlp is ready to use!"
 else
     echo "❌ yt-dlp setup failed! Check permissions."
