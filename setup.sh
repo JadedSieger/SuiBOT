@@ -3,18 +3,30 @@ set -e  # Exit on error
 
 echo "Setting up yt-dlp from local files"
 
-# Ensure ffmpeg is installed
-apt-get update && apt-get install -y ffmpeg
+# Ensure dependencies are installed
+apt-get update && apt-get install -y ffmpeg python3 python3-pip
 
-# Set executable permissions for yt-dlp
-chmod +x ./bin/yt-dlp.exe
+# Install yt-dlp via pip
+pip3 install -U yt-dlp
 
-# Verify that yt-dlp is executable
-if ./bin/yt-dlp.exe --version &> /dev/null; then
-    echo "✅ yt-dlp is ready to use!"
-else
-    echo "❌ yt-dlp setup failed! Check permissions."
+# Verify Python yt-dlp installation
+if yt-dlp --version &> /dev/null; then
+    echo "✅ Python yt-dlp installed successfully!"
+else 
+    echo "❌ Python yt-dlp installation failed!"
     exit 1
+fi
+
+# If you must use yt-dlp.exe, enable this section
+if [ -f "./bin/yt-dlp.exe" ]; then
+    apt-get install -y wine
+    chmod +x ./bin/yt-dlp.exe
+    if wine ./bin/yt-dlp.exe --version &> /dev/null; then
+        echo "✅ yt-dlp.exe is ready to use!"
+    else
+        echo "❌ yt-dlp.exe setup failed! Check Wine."
+        exit 1
+    fi
 fi
 
 echo "Setup complete!"
