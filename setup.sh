@@ -4,7 +4,7 @@ set -e  # Exit on error
 echo "Setting up yt-dlp from local files"
 
 # Ensure dependencies are installed
-apt-get update && apt-get install -y ffmpeg python3 python3-pip
+apt-get update && apt-get install -y ffmpeg python3 python3-pip wine
 
 # Install yt-dlp via pip
 pip3 install -U yt-dlp
